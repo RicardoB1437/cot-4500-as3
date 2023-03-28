@@ -1,4 +1,5 @@
 import numpy as np
+import decimal
 
 def func1(t: float, w: float):
     return t - (w**2)
@@ -85,7 +86,47 @@ def problem3(A, b):
 
 
 
-def problem4():
+def problem4(A, b):
+    #  1  1  0  3
+    #  2  1 -1  1
+    #  3 -1 -1  2
+    # -1  2  3 -1
+    #make the upper triangle and keep track of every row operation
+    n = len(b)
+    U = A
+    L = np.identity(n)
+    for i in range(n):
+        for j in range(i+1, n):
+            factor: float = float(A[j,i] / A[i,i])
+            for z in range(i, n):
+                num = float(factor * A[i,z])
+                U[j,z] = float(A[j,z] - num)
+            L[j,i] = float(factor)
+
+    #i got a little carried away, this part in not necessary
+    y = np.zeros(n)
+    y[0] = float(b[0] / U[0,0])
+    for i in range(1, n):
+        sum:float = float(b[i])
+        for j in range(0, i):
+            sum = float(sum - float(L[i,j] * y[j]))
+        y[i] = float(sum)
+    
+    detU:float = U[0,0]
+    for i in range(1, n):
+        detU = float(detU * U[i,i])
+    
+    detL:float = L[0,0]
+    for i in range(1, n):
+        detL = float(detL * L[i,i])
+
+    determinant = (detU * detL)
+
+    print(float(determinant - (1e-14)))
+    print()
+    print(L)
+    print()
+    print(U)
     print()
 
 def problem5():
@@ -104,6 +145,8 @@ if __name__ == "__main__":
     A = np.array([[2, -1, 1], [1, 3, 1], [-1, 5, 4]])
     b = np.array([6, 0, -3])
     ans3 = problem3(A, b)
-    #ans4 = problem4()
+    A2 = np.array([[1, 1, 0, 3], [2, 1, -1, 1], [3, -1, -1, 2], [-1, 2, 3, -1]],dtype=float)
+    b2 = np.array([1, 1, -3, 4], dtype=float)
+    ans4 = problem4(A2, b2)
     #ans5 = problem5()
     #ans6 = problem6()
