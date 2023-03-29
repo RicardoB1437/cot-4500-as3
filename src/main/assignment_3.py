@@ -129,14 +129,43 @@ def problem4(A, b):
     print(U)
     print()
 
-def problem5():
+def problem5(A):
+    n = len(A)
+    trueFlag = True
+    for i in range(n):
+        max = A[i,i]
+        sum = 0
+        for j in range(n):
+            if j == i:
+                continue
+            sum = sum + abs(A[i,j])
+        if sum > max:
+            trueFlag = False
+
+    print(trueFlag)
     print()
 
-def problem6():
-    print()
+def problem6(A):
+    AT = np.transpose(A)
+    symmetric = np.array_equal(A, AT)
 
+    pivotsPositive = True
+    U = A
+    n = len(A)
+    #lets see if all of the pivots are positive
+    for i in range(n):
+        for j in range(i+1, n):
+            factor: float = float(A[j,i] / A[i,i])
+            for z in range(i, n):
+                num = float(factor * A[i,z])
+                U[j,z] = float(A[j,z] - num)
 
+    for i in range(n):
+        if U[i,i] < 0:
+            pivotsPositive = False
+            break
 
+    print(symmetric and pivotsPositive)
 
 
 if __name__ == "__main__":
@@ -145,8 +174,13 @@ if __name__ == "__main__":
     A = np.array([[2, -1, 1], [1, 3, 1], [-1, 5, 4]])
     b = np.array([6, 0, -3])
     ans3 = problem3(A, b)
+
     A2 = np.array([[1, 1, 0, 3], [2, 1, -1, 1], [3, -1, -1, 2], [-1, 2, 3, -1]],dtype=float)
     b2 = np.array([1, 1, -3, 4], dtype=float)
     ans4 = problem4(A2, b2)
-    #ans5 = problem5()
-    #ans6 = problem6()
+
+    A3 = np.array([[9, 0, 5, 2, 1], [3, 9, 1, 2, 1], [0, 1, 7, 2, 3], [4, 2, 3, 12, 2], [3, 2, 4, 0, 4]])
+    ans5 = problem5(A3)
+
+    A4 = np.array([[2, 2, 1], [2, 3, 0], [1, 0, 2]])
+    ans6 = problem6(A4)
