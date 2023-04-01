@@ -1,5 +1,4 @@
 import numpy as np
-import decimal
 
 def func1(t: float, w: float):
     return t - (w**2)
@@ -12,11 +11,11 @@ def problem1(a: float, b: float, N: float, alpha: float):
 
     #wi+1 = wi + h(function)
 
-    for i in range(1, N+1):
+    for i in range(1, N+2):
         w = w + (h * func1(t, w))
         t = t + h
     
-    print(w)
+    print("%.5f" % w)
     print()
 
 
@@ -33,7 +32,7 @@ def problem2(a: float, b: float, N: float, alpha: float):
         k4 = h * func1(t+h, w + k3)
         w = w + ((k1+(2*k2)+(2*k3)+k4)/6)
         t = t + h
-    print(w)
+    print("%.5f" % w)
     print()
 
 def compute_lcm(x, y):
@@ -122,7 +121,7 @@ def problem4(A, b):
 
     determinant = (detU * detL)
 
-    print(float(determinant - (1e-14)))
+    print("%.5f" % determinant)
     print()
     print(L)
     print()
