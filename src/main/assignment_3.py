@@ -11,7 +11,7 @@ def problem1(a: float, b: float, N: float, alpha: float):
 
     #wi+1 = wi + h(function)
 
-    for i in range(1, N+2):
+    for i in range(1, N+1):
         w = w + (h * func1(t, w))
         t = t + h
     
